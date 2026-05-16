@@ -864,7 +864,7 @@
             });
 
             // Update Counter
-            slideCounter.innerText = `${currentSlide + 1} / ${totalSlides}`;
+            slideCounter.innerHTML = `<span dir="ltr">${currentSlide + 1} / ${totalSlides}</span>`;
 
             // Update Progress Bar
             const progress = ((currentSlide) / (totalSlides - 1)) * 100;
