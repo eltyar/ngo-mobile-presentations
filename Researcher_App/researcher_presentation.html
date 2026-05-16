@@ -15,8 +15,8 @@
             --primary-glow: rgba(13, 115, 119, 0.3);
             --bg-dark: #041213;
             --bg-card: rgba(13, 33, 35, 0.6);
-            --text-light: #F8FAFC;
-            --text-muted: #94A3B8;
+            --text-light: #0f172a;
+            --text-muted: #475569;
             --gold: #FBBF24;
             --transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -37,41 +37,28 @@
             position: relative;
         }
 
-        /* Abstract Background Glow */
+        /* Ambient Liquid Glass Mesh Gradients */
         .bg-glow {
-            position: absolute;
-            width: 60vw;
-            height: 60vw;
-            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 60%);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0.5;
-            z-index: 0;
-            pointer-events: none;
-            animation: pulse-glow 8s ease-in-out infinite alternate;
+            position: absolute; width: 80vw; height: 80vw;
+            background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 60%);
+            border-radius: 50%; top: -20%; left: -10%; z-index: 0; pointer-events: none;
+            animation: float-orb 15s ease-in-out infinite alternate;
         }
         .bg-glow-2 {
-            position: absolute;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 60%);
-            border-radius: 50%;
-            top: 30%;
-            left: 20%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            pointer-events: none;
-            animation: float-glow 12s ease-in-out infinite alternate;
+            position: absolute; width: 70vw; height: 70vw;
+            background: radial-gradient(circle, rgba(2,132,199,0.1) 0%, transparent 60%);
+            border-radius: 50%; bottom: -20%; right: -10%; z-index: 0; pointer-events: none;
+            animation: float-orb 20s ease-in-out infinite alternate-reverse;
         }
-        @keyframes pulse-glow {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+        .bg-glow-3 {
+            position: absolute; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 60%);
+            border-radius: 50%; top: 30%; left: 40%; z-index: 0; pointer-events: none;
+            animation: float-orb 25s ease-in-out infinite alternate;
         }
-        @keyframes float-glow {
-            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.2; }
-            100% { transform: translate(-40%, -40%) scale(1.1); opacity: 0.5; }
+        @keyframes float-orb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 80px) scale(1.1); }
         }
 
         .progress-bar {
@@ -170,7 +157,7 @@
             font-size: clamp(1.8rem, 3vw, 2.8rem);
             font-weight: 800;
             margin-bottom: 1.5rem;
-            color: #fff;
+            color: #0f172a;
             white-space: nowrap;
         }
 
@@ -188,7 +175,7 @@
 
         .feature-box {
             background: rgba(10, 25, 27, 0.6);
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.8);
             padding: 1.5rem;
             border-radius: 20px;
             margin-bottom: 1rem;
@@ -196,12 +183,12 @@
             gap: 1.5rem;
             align-items: flex-start;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
         
         .feature-box:hover {
             transform: translateX(-10px);
-            border-color: var(--primary-glow);
+            border-color: var(--primary); box-shadow: 0 10px 30px rgba(16,185,129,0.15);
         }
 
         .feature-icon {
@@ -213,7 +200,7 @@
         }
 
         .feature-text h3 {
-            color: #fff;
+            color: #0f172a;
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
         }
@@ -236,13 +223,13 @@
             position: relative;
             width: 300px;
             height: 620px;
-            background-color: #000;
+            background-color: #f8fafc;
             border-radius: 45px;
             box-shadow: 
-                inset 0 0 0 2px #444, 
-                inset 0 0 0 6px #000, 
-                inset 0 0 0 7px #222, 
-                0 30px 60px rgba(0,0,0,0.5),
+                inset 0 0 0 2px #e2e8f0, 
+                inset 0 0 0 6px #f1f5f9, 
+                inset 0 0 0 7px #cbd5e1, 
+                0 30px 60px rgba(0,0,0,0.15),
                 0 0 40px var(--primary-glow);
             padding: 10px;
             transform-style: preserve-3d;
@@ -297,7 +284,7 @@
             backdrop-filter: blur(20px);
             padding: 0.5rem 1.5rem;
             border-radius: 50px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             z-index: 100;
             box-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
@@ -305,7 +292,7 @@
         .nav-btn {
             background: transparent;
             border: none;
-            color: #fff;
+            color: #0f172a;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
@@ -455,9 +442,9 @@
             position: fixed;
             top: 15px;
             right: 15px;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(255, 255, 255, 0.85); color: #0f172a;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             color: var(--text-light);
             padding: 6px 14px;
             border-radius: 20px;
@@ -577,6 +564,7 @@
 
     <div class="bg-glow"></div>
     <div class="bg-glow-2"></div>
+    <div class="bg-glow-3"></div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
     <div class="slides-container" id="slidesContainer">
@@ -589,7 +577,7 @@
                 </p>
                 <div style="margin-top: 2rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
                     <span class="dev-badge">الإصدار v2.0</span>
-                    <button class="nav-btn" style="background: var(--primary); color: #fff; font-size: 1.2rem; padding: 0.8rem 2.5rem; border-radius: 50px;" onclick="nextSlide()">بدء العرض التنفيذي</button>
+                    <button class="nav-btn" style="background: var(--primary); color: #0f172a; font-size: 1.2rem; padding: 0.8rem 2.5rem; border-radius: 50px;" onclick="nextSlide()">بدء العرض التنفيذي</button>
                 </div>
             </div>
         </div>
@@ -871,10 +859,10 @@
                 <p class="slide-desc" style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 1.5rem;">
                     تم تصميم وتطوير هذه المنصة البرمجية لتلبي أعلى المعايير القياسية، وتقديم قيمة مضافة تتمثل في تقليل التكاليف اللوجستية، أتمتة الإجراءات الرقابية، وحوكمة البيانات الميدانية بالكامل.
                 </p>
-                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem 2rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); display: inline-block;">
+                <div style="background: rgba(255,255,255,0.6); backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); padding: 1.5rem 2rem; border-radius: 15px; border: 1px solid rgba(0, 0, 0, 0.05); display: inline-block;">
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.3rem;">تم التصميم والتطوير بواسطة م. محمد الطيار</p>
                     <h3 style="color: var(--primary); font-size: 1.4rem; font-weight: 800;">شركة خبير المحدودة (Expert Co. Ltd.)</h3>
-                    <p style="color: #fff; font-size: 0.85rem; margin-top: 0.8rem; opacity: 0.7;">© جميع الحقوق محفوظة 2026</p>
+                    <p style="color: #0f172a; font-size: 0.85rem; margin-top: 0.8rem; opacity: 0.7;">© جميع الحقوق محفوظة 2026</p>
                 </div>
             </div>
         </div>

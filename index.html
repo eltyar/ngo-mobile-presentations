@@ -10,27 +10,55 @@
         body {
             margin: 0;
             font-family: 'Cairo', sans-serif;
-            background: #0f172a;
-            color: #fff;
+            background: #f8fafc;
+            color: #0f172a;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             text-align: center;
+            overflow: hidden;
+            position: relative;
         }
+        /* Ambient Background Glows */
+        .bg-mesh-1 {
+            position: absolute; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 60%);
+            border-radius: 50%; top: -10%; left: -10%; z-index: 0; pointer-events: none;
+            animation: float-orb 15s ease-in-out infinite alternate;
+        }
+        .bg-mesh-2 {
+            position: absolute; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(2,132,199,0.08) 0%, transparent 60%);
+            border-radius: 50%; bottom: -10%; right: -10%; z-index: 0; pointer-events: none;
+            animation: float-orb 20s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes float-orb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 80px) scale(1.1); }
+        }
+
         .container {
-            max-width: 800px;
+            max-width: 900px;
             padding: 2rem;
+            z-index: 10;
         }
         h1 {
-            font-size: 2.5rem;
-            color: #38bdf8;
+            font-size: clamp(2rem, 4vw, 3rem);
+            background: linear-gradient(135deg, #0f172a 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
+            font-weight: 800;
         }
         p {
             font-size: 1.2rem;
-            color: #94a3b8;
-            margin-bottom: 3rem;
+            color: #475569;
+            margin-bottom: 3.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
         }
         .cards {
             display: flex;
@@ -39,39 +67,48 @@
             flex-wrap: wrap;
         }
         .card {
-            background: #1e293b;
-            padding: 2rem;
-            border-radius: 15px;
-            width: 300px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 320px;
             text-decoration: none;
-            color: white;
-            border: 1px solid #334155;
-            transition: all 0.3s ease;
+            color: #0f172a;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .card:hover {
-            transform: translateY(-5px);
-            border-color: #38bdf8;
-            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
+            transform: translateY(-10px);
+            border-color: #10b981;
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
         }
         .card-icon {
             font-size: 4rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
         }
         .card-desc {
-            font-size: 0.9rem;
-            color: #94a3b8;
+            font-size: 1rem;
+            color: #475569;
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            .cards { flex-direction: column; align-items: center; }
+            .card { width: 100%; max-width: 350px; }
         }
     </style>
 </head>
 <body>
+    <div class="bg-mesh-1"></div>
+    <div class="bg-mesh-2"></div>
     <div class="container">
         <h1>المنظومة الرقمية للجمعيات الخيرية</h1>
-        <p>اختر العرض التقديمي الذي تود تصفحه للاطلاع على مزايا التطبيقات الذكية المتكاملة.</p>
+        <p>اختر العرض التقديمي الذي تود تصفحه للاطلاع على مزايا التطبيقات الذكية المتكاملة، بلمسة تقنية حديثة وموثوقية عالية.</p>
         
         <div class="cards">
             <a href="Beneficiary_App/beneficiary_presentation.html" class="card">
@@ -86,7 +123,7 @@
                 <div class="card-desc">الإدارة الميدانية، الفلاتر الذكية، وصحة البيانات للباحثين والمدققين.</div>
             </a>
         </div>
-        <div style="margin-top: 4rem; font-size: 0.9rem; color: #475569;">
+        <div style="margin-top: 5rem; font-size: 0.95rem; color: #64748b; font-weight: 600;">
             تم التصميم والتطوير بواسطة م. محمد الطيار - شركة خبير المحدودة
         </div>
     </div>
