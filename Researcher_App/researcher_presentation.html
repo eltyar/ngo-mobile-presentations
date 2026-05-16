@@ -437,31 +437,10 @@
         }
 
         /* 3. App-Launch Reveal */
-        .slide .screen img {
-            transform: scale(1.1) translateY(30px);
-            opacity: 0;
-            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-            transition-delay: 0.2s;
-            will-change: transform, opacity;
-        }
-        .slide.active .screen img {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
+/* Old img animation replaced */
 
         /* 4. Spotlight Text */
-        .slide .slide-title, .slide .grand-title, .slide .slide-desc {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transition-delay: 0.1s;
-            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
-        }
-        .slide.active .slide-title, .slide.active .grand-title, .slide.active .slide-desc {
-            opacity: 1;
-            transform: translateY(0);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-        }
+/* Old text animation replaced */
 
         /* 5. 3D Parallax Prep */
         .slide-content-wrapper { perspective: 1500px; }
@@ -512,6 +491,74 @@
             }
         }
 
+    
+        /* --- 2026 Advanced Animations & Staggering --- */
+        /* 1. Staggered Text & Elements Reveal */
+        .slide .slide-title, .slide .grand-title {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .slide .slide-desc {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .slide .feature-box {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .slide.active .slide-title, .slide.active .grand-title {
+            opacity: 1; transform: translateY(0); transition-delay: 0.1s;
+        }
+        .slide.active .slide-desc {
+            opacity: 1; transform: translateY(0); transition-delay: 0.25s;
+        }
+        .slide.active .feature-box:nth-of-type(1) {
+            opacity: 1; transform: translateX(0); transition-delay: 0.4s;
+        }
+        .slide.active .feature-box:nth-of-type(2) {
+            opacity: 1; transform: translateX(0); transition-delay: 0.55s;
+        }
+
+        /* 2. Varied 3D Spatial Animations for Phones */
+        .slide .iphone-frame {
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        /* Animation Type A: Float Up */
+        .slide[data-anim="float-up"] .iphone-frame { transform: translateY(80px) scale(0.9); }
+        .slide[data-anim="float-up"].active .iphone-frame { opacity: 1; transform: translateY(0) scale(1); transition-delay: 0.3s; }
+        .slide[data-anim="float-up"].active .iphone-frame:nth-child(2) { transition-delay: 0.45s; }
+
+        /* Animation Type B: 3D Flip Spatial */
+        .slide[data-anim="3d-flip"] .iphone-frame { transform: perspective(1500px) rotateY(25deg) rotateX(10deg) translateZ(-100px) scale(0.85); opacity: 0; }
+        .slide[data-anim="3d-flip"].active .iphone-frame { opacity: 1; transform: perspective(1500px) rotateY(0) rotateX(0) translateZ(0) scale(1); transition-delay: 0.3s; }
+        .slide[data-anim="3d-flip"].active .iphone-frame:nth-child(2) { transition-delay: 0.5s; }
+
+        /* Animation Type C: Slide from sides */
+        .slide[data-anim="slide-side"] .iphone-frame:nth-child(1) { transform: translateX(-100px) rotate(-5deg); }
+        .slide[data-anim="slide-side"] .iphone-frame:nth-child(2) { transform: translateX(100px) rotate(5deg); }
+        .slide[data-anim="slide-side"].active .iphone-frame { opacity: 1; transform: translateX(0) rotate(0); transition-delay: 0.3s; }
+        .slide[data-anim="slide-side"].active .iphone-frame:nth-child(2) { transition-delay: 0.45s; }
+
+        /* Screen content delayed reveal */
+        .slide .screen img {
+            transform: scale(1.15);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .slide.active .screen img {
+            transform: scale(1);
+            opacity: 1;
+            transition-delay: 0.6s;
+        }
+        .slide.active .iphone-frame:nth-child(2) .screen img {
+            transition-delay: 0.8s;
+        }
+
     </style>
 </head>
 <body>
@@ -534,7 +581,7 @@
 
     <div class="slides-container" id="slidesContainer">
         <!-- Slide 0: Grand Intro -->
-        <div class="slide active">
+        <div class="slide active" data-anim="3d-flip">
             <div class="slide-content-wrapper layout-center">
                 <h1 class="grand-title">نظام الباحث الميداني والإدارة الذكية</h1>
                 <p class="slide-desc" style="font-size: 1.5rem; max-width: 800px; margin: 0 auto;">
@@ -548,7 +595,7 @@
         </div>
 
         <!-- Slide 1: Splash & Onboarding -->
-        <div class="slide">
+        <div class="slide" data-anim="float-up"
             <div class="slide-content-wrapper layout-split">
                 <div class="text-content">
                     <h2 class="slide-title">واجهة العمل الميداني</h2>
@@ -578,7 +625,7 @@
         </div>
 
         <!-- Slide 2: Login & OTP -->
-        <div class="slide">
+        <div class="slide" data-anim="slide-side"
             <div class="slide-content-wrapper layout-split reverse">
                 <div class="text-content">
                     <h2 class="slide-title">أمان البيانات والخصوصية</h2>
@@ -608,7 +655,7 @@
         </div>
 
         <!-- Slide 3: Dashboard & Data Health -->
-        <div class="slide">
+        <div class="slide" data-anim="3d-flip"
             <div class="slide-content-wrapper layout-split">
                 <div class="text-content">
                     <h2 class="slide-title">صحة البيانات ومؤشرات الأداء</h2>
@@ -638,7 +685,7 @@
         </div>
 
         <!-- Slide 4: Families Management & Unified Search -->
-        <div class="slide">
+        <div class="slide" data-anim="float-up"
             <div class="slide-content-wrapper layout-split reverse">
                 <div class="text-content">
                     <h2 class="slide-title">إدارة الأسر والبحث الموحد</h2>
@@ -668,7 +715,7 @@
         </div>
 
         <!-- Slide 5: Visits Calendar & Map -->
-        <div class="slide">
+        <div class="slide" data-anim="slide-side"
             <div class="slide-content-wrapper layout-split">
                 <div class="text-content">
                     <h2 class="slide-title">جدولة الزيارات والربط المكاني</h2>
@@ -698,7 +745,7 @@
         </div>
 
         <!-- Slide 6: Smart Advanced Filters & Services Tracking -->
-        <div class="slide">
+        <div class="slide" data-anim="3d-flip"
             <div class="slide-content-wrapper layout-split reverse">
                 <div class="text-content">
                     <h2 class="slide-title">معالجة الطلبات والفلاتر الإدارية</h2>
@@ -728,7 +775,7 @@
         </div>
 
         <!-- Slide 7: Seasonal Delivery -->
-        <div class="slide">
+        <div class="slide" data-anim="float-up"
             <div class="slide-content-wrapper layout-split">
                 <div class="text-content">
                     <h2 class="slide-title">العمليات والمساعدات الموسمية</h2>
@@ -758,7 +805,7 @@
         </div>
 
         <!-- Slide 8: Chats -->
-        <div class="slide">
+        <div class="slide" data-anim="slide-side"
             <div class="slide-content-wrapper layout-split reverse">
                 <div class="text-content">
                     <h2 class="slide-title">التواصل والمتابعة الميدانية</h2>
@@ -788,7 +835,7 @@
         </div>
 
         <!-- Slide 9: Notifications & Settings -->
-        <div class="slide">
+        <div class="slide" data-anim="3d-flip"
             <div class="slide-content-wrapper layout-split">
                 <div class="text-content">
                     <h2 class="slide-title">إدارة التنبيهات وإعدادات النظام</h2>
@@ -818,7 +865,7 @@
         </div>
 
         <!-- Slide 10: Grand Outro -->
-        <div class="slide">
+        <div class="slide" data-anim="float-up"
             <div class="slide-content-wrapper layout-center">
                 <h1 class="grand-title" style="font-size: 3rem; margin-top: -2rem;">منظومة مؤسسية متكاملة للعمل الميداني</h1>
                 <p class="slide-desc" style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 1.5rem;">
