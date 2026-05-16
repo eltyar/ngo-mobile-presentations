@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📱</text></svg>">
+    <title>تطبيق الباحث - العرض التقديمي</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0D7377;
+            --primary-glow: rgba(13, 115, 119, 0.3);
+            --bg-dark: #041213;
+            --bg-card: rgba(13, 33, 35, 0.6);
+            --text-light: #F8FAFC;
+            --text-muted: #94A3B8;
+            --gold: #FBBF24;
+            --transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow: hidden; /* Prevent scrolling, use slides */
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        /* Abstract Background Glow */
+        .bg-glow {
+            position: absolute;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 60%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.5;
+            z-index: 0;
+            pointer-events: none;
+            animation: pulse-glow 8s ease-in-out infinite alternate;
+        }
+        .bg-glow-2 {
+            position: absolute;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 60%);
+            border-radius: 50%;
+            top: 30%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+            animation: float-glow 12s ease-in-out infinite alternate;
+        }
+        @keyframes pulse-glow {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+        }
+        @keyframes float-glow {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.2; }
+            100% { transform: translate(-40%, -40%) scale(1.1); opacity: 0.5; }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 100;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #2E9CA1, var(--primary));
+            background-size: 200% 100%;
+            animation: gradientMove 2s linear infinite;
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+        @keyframes gradientMove {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        /* Slide Container */
+        .slides-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+            transition: var(--transition);
+            padding: 2rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .slide-content-wrapper {
+            max-width: 1400px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            padding-bottom: 4rem; /* Safe area for navigation bar */
+        }
+
+        /* Layout Types */
+        .layout-center {
+            flex-direction: column;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .layout-split {
+            flex-direction: row;
+        }
+        .layout-split.reverse {
+            flex-direction: row-reverse;
+        }
+
+        /* Typography */
+        h1.grand-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #B2EBF2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        h2.slide-title {
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        p.slide-desc {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Text Content Area */
+        .text-content {
+            flex: 1;
+        }
+
+        .feature-box {
+            background: rgba(10, 25, 27, 0.6);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .feature-box:hover {
+            transform: translateX(-10px);
+            border-color: var(--primary-glow);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            background: rgba(13, 115, 119, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .feature-text h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-text p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Mockup Design (Refined) */
+        .mockups-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            perspective: 1000px;
+        }
+
+        .iphone-frame {
+            position: relative;
+            width: 300px;
+            height: 620px;
+            background-color: #000;
+            border-radius: 45px;
+            box-shadow: 
+                inset 0 0 0 2px #444, 
+                inset 0 0 0 6px #000, 
+                inset 0 0 0 7px #222, 
+                0 30px 60px rgba(0,0,0,0.5),
+                0 0 40px var(--primary-glow);
+            padding: 10px;
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+        }
+
+        /* Ultra-Realistic Glass Screen Reflection */
+        .iphone-frame::before {
+            content: '';
+            position: absolute;
+            top: 3px; left: 3px; right: 3px; bottom: 3px;
+            border-radius: 42px;
+            background: linear-gradient(115deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 40%, rgba(255,255,255,0) 40.1%);
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        /* Removed Dynamic Island */
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            background-color: #111;
+            border-radius: 35px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Staggered Dual Mockups */
+        .dual-mockups .iphone-frame:nth-child(2) {
+            transform: translateY(40px) translateZ(-50px);
+            opacity: 0.9;
+        }
+
+        /* Navigation Controls */
+        .nav-controls {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(10, 25, 27, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            z-index: 100;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+            padding: 0 0.5rem;
+        }
+
+        /* Badge */
+        .dev-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(251, 191, 36, 0.1); /* Gold tint */
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 50px;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Outro Specific */
+        .outro-logo {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .slide-content-wrapper {
+                flex-direction: column !important;
+                text-align: center;
+                gap: 2rem;
+                padding-top: 2rem;
+                padding-bottom: 6rem;
+                justify-content: flex-start;
+                height: auto;
+                min-height: 100%;
+            }
+            .feature-box {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .dual-mockups {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .dual-mockups .iphone-frame:nth-child(2) {
+                transform: none !important;
+            }
+            .grand-title {
+                font-size: 2.2rem !important;
+                white-space: normal;
+            }
+            .slide-title {
+                font-size: 1.8rem;
+                white-space: normal;
+            }
+            .iphone-frame {
+                width: 260px;
+                height: 540px;
+                margin: 0 auto;
+            }
+            .nav-controls {
+                width: 90%;
+                justify-content: space-between;
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        /* --- Advanced Genius Effects --- */
+        /* 1. Custom Cursor */
+        body { cursor: none; }
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: var(--primary);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 2px solid rgba(13, 115, 119, 0.5);
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
+        }
+        .cursor-hover .cursor-dot {
+            background: transparent;
+        }
+        .cursor-hover .cursor-outline {
+            width: 60px; height: 60px;
+            background-color: rgba(13, 115, 119, 0.1);
+            border-color: var(--primary);
+        }
+
+        /* 2. Canvas Particles */
+        #particles-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1; /* Below content */
+            pointer-events: none;
+        }
+
+        /* 3. App-Launch Reveal */
+        .slide .screen img {
+            transform: scale(1.1) translateY(30px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition-delay: 0.2s;
+            will-change: transform, opacity;
+        }
+        .slide.active .screen img {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* 4. Spotlight Text */
+        .slide .slide-title, .slide .grand-title, .slide .slide-desc {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition-delay: 0.1s;
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+        }
+        .slide.active .slide-title, .slide.active .grand-title, .slide.active .slide-desc {
+            opacity: 1;
+            transform: translateY(0);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        /* 5. 3D Parallax Prep */
+        .slide-content-wrapper { perspective: 1500px; }
+
+        /* Disable cursor on mobile to avoid bugs */
+        @media (max-width: 992px) {
+            body { cursor: auto; }
+            .cursor-dot, .cursor-outline { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Advanced Effects -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="slides-container" id="slidesContainer">
+        <!-- Slide 0: Grand Intro -->
+        <div class="slide active">
+            <div class="slide-content-wrapper layout-center">
+                <h1 class="grand-title">نظام الباحث الميداني والإدارة الذكية</h1>
+                <p class="slide-desc" style="font-size: 1.5rem; max-width: 800px; margin: 0 auto;">
+                    أداة رقابية وتنفيذية مصممة خصيصاً لرفع إنتاجية الباحث الميداني، عبر أتمتة الإجراءات وتقليل الأخطاء البشرية باستخدام أدوات تحليل استباقية وتتبع جغرافي.
+                </p>
+                <div style="margin-top: 2rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                    <span class="dev-badge">الإصدار v2.0</span>
+                    <button class="nav-btn" style="background: var(--primary); color: #fff; font-size: 1.2rem; padding: 0.8rem 2.5rem; border-radius: 50px;" onclick="nextSlide()">بدء العرض التنفيذي</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 1: Splash & Onboarding -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-split">
+                <div class="text-content">
+                    <h2 class="slide-title">واجهة العمل الميداني</h2>
+                    <p class="slide-desc">
+                        تصميم عملي مخصص لبيئة العمل الميدانية (UX/UI)، يقلل من التشتت البصري ويوفر وصولاً سريعاً للأدوات الأساسية، مما يضمن بدء مهام الباحث بفعالية وفهم فوري لأدوات النظام.
+                    </p>
+                    <div class="feature-box">
+                        <div class="feature-icon">📐</div>
+                        <div class="feature-text">
+                            <h3>تصميم يخدم الإنتاجية</h3>
+                            <p>اعتماد واجهات بألوان تدعم الاستخدام الطويل تحت الإضاءة الميدانية مع التركيز على العناصر التفاعلية.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">📌</div>
+                        <div class="feature-text">
+                            <h3>تهيئة وظيفية سريعة</h3>
+                            <p>توضيح مسار العمل الميداني والوظائف المتاحة للباحثين الجدد لتسريع اندماجهم في المنظومة.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockups-area dual-mockups">
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/1_splash_screen.png" alt="Splash"></div></div>
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/2_onboarding_screen.png" alt="Onboarding"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Login & OTP -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-split reverse">
+                <div class="text-content">
+                    <h2 class="slide-title">أمان البيانات والخصوصية</h2>
+                    <p class="slide-desc">
+                        تطبيق معايير أمنية متقدمة لحماية بيانات الأسر في الميدان. يشمل مصادقة ثنائية وإدارة جلسات آمنة لضمان بقاء البيانات الحساسة ضمن الإطار المصرح له فقط.
+                    </p>
+                    <div class="feature-box">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-text">
+                            <h3>حماية الوصول (OTP)</h3>
+                            <p>ارتباط حساب الباحث برقم هاتفه المعتمد مع طلب رمز مؤقت لمنع الدخول من أجهزة غير موثوقة.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-text">
+                            <h3>حوكمة الجلسات</h3>
+                            <p>إدارة مركزية لجلسات العمل تقوم بالخروج التلقائي عند الخمول لضمان خصوصية بيانات المستفيد.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockups-area dual-mockups">
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/3_login_screen.png" alt="Login"></div></div>
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/4_otp_screen.png" alt="OTP"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Dashboard & Data Health -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-split">
+                <div class="text-content">
+                    <h2 class="slide-title">صحة البيانات ومؤشرات الأداء</h2>
+                    <p class="slide-desc">
+                        لوحة تحكم تدعم اتخاذ القرار وتتضمن فحصاً آلياً لـ (Data Health)، لاكتشاف المستندات المنتهية والأفراد المتجاوزين لسن الاستحقاق، مما يعزز دقة وموثوقية قاعدة البيانات المؤسسية.
+                    </p>
+                    <div class="feature-box">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">
+                            <h3>مؤشرات تشغيلية</h3>
+                            <p>إحصاء دقيق لحجم الطلبات والزيارات الميدانية مع إبراز المهام المتأخرة لمعالجتها بسرعة.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-text">
+                            <h3>تحديث استباقي للبيانات</h3>
+                            <p>أداة ترصد حالات النقص أو انتهاء الصلاحية للمستندات لتمكين الباحث من تصحيحها ميدانياً.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockups-area dual-mockups">
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/5_dashboard_home.png" alt="Dashboard"></div></div>
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/6_dashboard_scrolled.png" alt="Dashboard Scrolled"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Families Management & Unified Search -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-split reverse">
+                <div class="text-content">
+                    <h2 class="slide-title">إدارة الأسر والبحث الموحد</h2>
+                    <p class="slide-desc">
+                        استعراض شامل لقاعدة بيانات المستفيدين مع محرك بحث موحد متقدم يتيح الفرز برقم الملف، الاسم، أو رقم الجوال للوصول اللحظي للمعلومات المطلوبة أثناء العمل الميداني.
+                    </p>
+                    <div class="feature-box">
+                        <div class="feature-icon">📁</div>
+                        <div class="feature-text">
+                            <h3>سجلات إلكترونية كاملة</h3>
+                            <p>عرض الملف التعريفي والمالي والديموغرافي للأسرة لتمكين الباحث من الإحاطة بكافة التفاصيل الداعمة لقراره.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">🔎</div>
+                        <div class="feature-text">
+                            <h3>محرك بحث مركزي</h3>
+                            <p>الحد من الوقت المستغرق في البحث اليدوي عبر خوارزميات بحث وتصفية موحدة وعالية الدقة.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockups-area dual-mockups">
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/7_families_list.png" alt="Families List"></div></div>
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/8_family_details.png" alt="Family Details"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Visits Calendar & Map -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-split">
+                <div class="text-content">
+                    <h2 class="slide-title">جدولة الزيارات والربط المكاني</h2>
+                    <p class="slide-desc">
+                        أداة ربط جغرافي وتخطيط تقويمي تساعد الباحث على تنظيم زياراته الميدانية وتتبع مسارها باستخدام تقنيات الخرائط (GPS)، مما يساهم في خفض التكاليف التشغيلية وتوفير الوقت اللوجستي.
+                    </p>
+                    <div class="feature-box">
+                        <div class="feature-icon">📅</div>
+                        <div class="feature-text">
+                            <h3>تقويم ميداني مؤتمت</h3>
+                            <p>إدارة الجدول اليومي والشهري للباحث مع تمييز حالة الزيارات (منجزة، مؤجلة، متأخرة).</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">🗺️</div>
+                        <div class="feature-text">
+                            <h3>تخطيط المسارات (Routing)</h3>
+                            <p>توجيه الباحث لأقرب الحالات وفق الموقع الجغرافي المسجل، لضمان إنهاء المهام بفعالية أكبر.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockups-area dual-mockups">
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/10_visits_calendar.png" alt="Visits Calendar"></div></div>
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/11_visits_map.png" alt="Visits Map"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Smart Advanced Filters & Services Tracking -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-split reverse">
+                <div class="text-content">
+                    <h2 class="slide-title">معالجة الطلبات والفلاتر الإدارية</h2>
+                    <p class="slide-desc">
+                        واجهة إدارة وتدقيق للطلبات مدعومة بفلاتر متقدمة (Advanced Filters) لفرز الخدمات بدقة بناءً على تصنيفها ونوعها، وتوفير نماذج بيانات متخصصة لكل خدمة لضمان صحة الإجراء المتبع.
+                    </p>
+                    <div class="feature-box">
+                        <div class="feature-icon">🎛️</div>
+                        <div class="feature-text">
+                            <h3>فلاتر تصنيف دقيقة</h3>
+                            <p>تسهيل مراجعة الخدمات المجمعة كطلبات الإيجارات أو التأسيس لاعتمادها بفعالية ودون تشتت.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">📑</div>
+                        <div class="feature-text">
+                            <h3>نماذج خدمات مرنة</h3>
+                            <p>عرض البيانات المخصصة (Custom Fields) المرتبطة حصراً بنوع الخدمة لتسريع اتخاذ قرار الاعتماد.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockups-area dual-mockups">
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/12_services_list.png" alt="Services List"></div></div>
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/14_service_details_rent.png" alt="Service Details Rent"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Seasonal Delivery -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-split">
+                <div class="text-content">
+                    <h2 class="slide-title">العمليات والمساعدات الموسمية</h2>
+                    <p class="slide-desc">
+                        نظام ميداني مؤتمت بالكامل لتوزيع المساعدات العينية والموسمية. يستخدم تقنية المسح الضوئي (QR Scanner) لتسجيل الاستلام الفوري وتحديث الأرصدة ومنع الازدواجية والمخالفات الرقابية.
+                    </p>
+                    <div class="feature-box">
+                        <div class="feature-icon">📦</div>
+                        <div class="feature-text">
+                            <h3>إدارة المخزون والتوزيع</h3>
+                            <p>تتبع مباشر للكميات المسلمة، وتوثيق لحظي يخفض الحاجة لعمليات الجرد الورقي المعقدة.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-text">
+                            <h3>مسح واستلام موثق</h3>
+                            <p>أتمتة إثبات التوزيع بربط البطاقة الرقمية للأسرة بقواعد بيانات المشاريع الموسمية.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockups-area dual-mockups">
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/15_seasonal_delivery.png" alt="Seasonal Delivery"></div></div>
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/16_sacrificial_meat.png" alt="Sacrificial Meat"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Chats -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-split reverse">
+                <div class="text-content">
+                    <h2 class="slide-title">التواصل والمتابعة الميدانية</h2>
+                    <p class="slide-desc">
+                        قناة محادثات رسمية وآمنة بين الباحث والمستفيد تُستخدم لطلب المستندات الناقصة ورفع المرفقات مباشرة من الميدان، مما يسرع عملية التدقيق دون الحاجة لزيارات إضافية ترهق الميزانية التشغيلية.
+                    </p>
+                    <div class="feature-box">
+                        <div class="feature-icon">💬</div>
+                        <div class="feature-text">
+                            <h3>تواصل إداري رسمي</h3>
+                            <p>حفظ سجل المراسلات كمرجعية إدارية تضمن استمرارية الخدمة حتى عند تغيير الباحث المسؤول.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">📎</div>
+                        <div class="feature-text">
+                            <h3>أرشفة المرفقات اللحظية</h3>
+                            <p>تسهيل تحديث قاعدة البيانات برفع الصور والوثائق عبر كاميرا جهاز الباحث مباشرةً للأنظمة المركزية.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockups-area dual-mockups">
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/18_chats_list.png" alt="Chats List"></div></div>
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/19_chat_screen.png" alt="Chat Screen"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Notifications & Settings -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-split">
+                <div class="text-content">
+                    <h2 class="slide-title">إدارة التنبيهات وإعدادات النظام</h2>
+                    <p class="slide-desc">
+                        إشعارات آلية لتذكير الباحث بالزيارات المتأخرة والطلبات المعلقة لضمان الالتزام بمؤشرات الأداء. مع إمكانية تعديل إعدادات التطبيق ليتوافق مع أجهزة ومتطلبات الباحثين المختلفة.
+                    </p>
+                    <div class="feature-box">
+                        <div class="feature-icon">📩</div>
+                        <div class="feature-text">
+                            <h3>تنبيهات استباقية</h3>
+                            <p>نظام تصعيد داخلي يضمن عدم إهمال أي مهمة مسندة ويعزز الامتثال لإجراءات العمل المعتمدة.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">⚙️</div>
+                        <div class="feature-text">
+                            <h3>تخصيص الواجهات</h3>
+                            <p>خيارات متعددة تشمل إدارة المساحة التخزينية الميدانية والوضع الليلي لدعم كفاءة التشغيل.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockups-area dual-mockups">
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/20_notification_screen.png" alt="Notifications"></div></div>
+                    <div class="iphone-frame"><div class="screen"><img src="screenshots/17_settings.png" alt="Settings"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Grand Outro -->
+        <div class="slide">
+            <div class="slide-content-wrapper layout-center">
+                <h1 class="grand-title" style="font-size: 3rem; margin-top: -2rem;">منظومة مؤسسية متكاملة للعمل الميداني</h1>
+                <p class="slide-desc" style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 1.5rem;">
+                    تم تصميم وتطوير هذه المنصة البرمجية لتلبي أعلى المعايير القياسية، وتقديم قيمة مضافة تتمثل في تقليل التكاليف اللوجستية، أتمتة الإجراءات الرقابية، وحوكمة البيانات الميدانية بالكامل.
+                </p>
+                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem 2rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); display: inline-block;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.3rem;">تم التصميم والتطوير بواسطة م. محمد الطيار</p>
+                    <h3 style="color: var(--primary); font-size: 1.4rem; font-weight: 800;">شركة خبير المحدودة (Expert Co. Ltd.)</h3>
+                    <p style="color: #fff; font-size: 0.85rem; margin-top: 0.8rem; opacity: 0.7;">© جميع الحقوق محفوظة 2026</p>
+                </div>
+            </div>
+        </div>
+</div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-btn prev-btn" onclick="prevSlide()" id="prevBtn">
+            <span>&rarr;</span> السابق
+        </button>
+        <span class="slide-counter" id="slideCounter">1 / 11</span>
+        <button class="nav-btn next-btn" onclick="nextSlide()" id="nextBtn">
+            التالي <span>&larr;</span>
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideCounter = document.getElementById('slideCounter');
+        const progressFill = document.getElementById('progressFill');
+
+        function updateUI() {
+            // Update Slides
+            slides.forEach((slide, index) => {
+                if(index === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update Counter
+            slideCounter.innerText = `${currentSlide + 1} / ${totalSlides}`;
+
+            // Update Progress Bar
+            const progress = ((currentSlide) / (totalSlides - 1)) * 100;
+            progressFill.style.width = `${progress}%`;
+
+            // Update Buttons
+            prevBtn.disabled = currentSlide === 0;
+            if(currentSlide === totalSlides - 1) {
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.disabled = false;
+            }
+        }
+
+        function nextSlide() {
+            if(currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateUI();
+            }
+        }
+
+        function prevSlide() {
+            if(currentSlide > 0) {
+                currentSlide--;
+                updateUI();
+            }
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowLeft') {
+                nextSlide(); // In RTL, Left Arrow usually means Next
+            } else if (e.key === 'ArrowRight') {
+                prevSlide(); // In RTL, Right Arrow usually means Prev
+            }
+        });
+
+        // --- Advanced Features Integration ---
+        
+        function resetParallax() {
+            document.querySelectorAll('.iphone-frame').forEach(frame => {
+                frame.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
+        }
+        
+        const oldUpdateUI = updateUI;
+        updateUI = function() {
+            resetParallax();
+            oldUpdateUI();
+        };
+
+        // 1. Custom Cursor, 3D Parallax & Magnetic Buttons
+        if (window.innerWidth > 992) {
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            window.globalMouseX = window.innerWidth / 2;
+            window.globalMouseY = window.innerHeight / 2;
+            let outlineX = window.globalMouseX;
+            let outlineY = window.globalMouseY;
+
+            window.addEventListener('mousemove', (e) => {
+                window.globalMouseX = e.clientX;
+                window.globalMouseY = e.clientY;
+                cursorDot.style.transform = `translate(${window.globalMouseX}px, ${window.globalMouseY}px) translate(-50%, -50%)`;
+                
+                // 3D Parallax for iPhones
+                const tiltX = (window.innerWidth / 2 - window.globalMouseX) / 50;
+                const tiltY = (window.innerHeight / 2 - window.globalMouseY) / 50;
+                document.querySelectorAll('.slide.active .iphone-frame').forEach(frame => {
+                    frame.style.transform = `rotateY(${tiltX}deg) rotateX(${-tiltY}deg)`;
+                });
+            });
+
+            function animateCursor() {
+                let distX = window.globalMouseX - outlineX;
+                let distY = window.globalMouseY - outlineY;
+                outlineX += distX * 0.2;
+                outlineY += distY * 0.2;
+                cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) translate(-50%, -50%)`;
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Hover States
+            const hoverElements = document.querySelectorAll('.nav-btn, .iphone-frame, .feature-box');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+
+            // Magnetic Buttons
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    btn.style.transition = 'transform 0.1s ease-out';
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transition = 'all 0.3s';
+                    btn.style.transform = `translate(0px, 0px)`;
+                });
+            });
+        }
+
+        // 2. Interactive Particles Network
+        const canvas = document.getElementById('particles-canvas');
+        if(canvas) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particles = [];
+            const particleCount = window.innerWidth > 992 ? 60 : 30;
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.radius = Math.random() * 1.5 + 0.5;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                    
+                    if (window.innerWidth > 992 && window.globalMouseX) {
+                        const dx = window.globalMouseX - this.x;
+                        const dy = window.globalMouseY - this.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 150) {
+                            this.x -= dx * 0.01;
+                            this.y -= dy * 0.01;
+                        }
+                    }
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(13, 115, 119, 0.4)';
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    for (let j = i; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 120) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(13, 115, 119, ${0.15 - distance / 800})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+
+        // Initialize UI
+        updateUI();
+    </script>
+</body>
+</html>

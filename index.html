@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة العروض التقديمية - الأنظمة الذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background: #0f172a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #38bdf8;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 3rem;
+        }
+        .cards {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 300px;
+            text-decoration: none;
+            color: white;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
+        }
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .card-desc {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>المنظومة الرقمية للجمعيات الخيرية</h1>
+        <p>اختر العرض التقديمي الذي تود تصفحه للاطلاع على مزايا التطبيقات الذكية المتكاملة.</p>
+        
+        <div class="cards">
+            <a href="Beneficiary_App/beneficiary_presentation.html" class="card">
+                <div class="card-icon">👨‍👩‍👧‍👦</div>
+                <div class="card-title">تطبيق المستفيدين</div>
+                <div class="card-desc">بوابة الخدمات، البطاقة الرقمية، وتتبع الطلبات الخاصة بالأسر المستفيدة.</div>
+            </a>
+            
+            <a href="Researcher_App/researcher_presentation.html" class="card">
+                <div class="card-icon">📱</div>
+                <div class="card-title">تطبيق الباحث الميداني</div>
+                <div class="card-desc">الإدارة الميدانية، الفلاتر الذكية، وصحة البيانات للباحثين والمدققين.</div>
+            </a>
+        </div>
+        <div style="margin-top: 4rem; font-size: 0.9rem; color: #475569;">
+            تم التصميم والتطوير بواسطة شركة خبير المحدودة
+        </div>
+    </div>
+</body>
+</html>
