@@ -342,26 +342,45 @@
 
         /* Responsive Design */
         @media (max-width: 992px) {
+            html, body {
+                width: 100%;
+                height: 100%;
+                overflow: hidden; /* App-like container */
+            }
             .slide {
-                padding: 1rem 0 0 0;
+                display: block !important; /* Critical to fix flex overflow bugs */
+                padding: 4rem 0 8rem 0; /* Clear space for top/bottom fixed elements */
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
             }
             .slide-content-wrapper {
+                display: flex !important;
                 flex-direction: column !important;
                 gap: 1.5rem;
-                padding-top: 1rem;
-                padding-bottom: 7rem;
+                padding: 0;
                 justify-content: flex-start;
+                align-items: stretch; /* Let children dictate width */
                 height: auto;
-                min-height: 100%;
+                min-height: min-content;
+            }
+            .layout-center {
+                align-items: center; /* Center text in intro slide */
+                padding: 0 1.5rem;
             }
             .text-content {
                 text-align: right;
                 width: 100%;
                 padding: 0 1.5rem;
+                box-sizing: border-box;
+            }
+            .layout-center .text-content {
+                text-align: center;
+                padding: 0;
             }
             .layout-center .slide-desc, .layout-center .grand-title {
                 text-align: center !important;
-                padding: 0 1.5rem;
+                padding: 0;
             }
             .feature-box {
                 flex-direction: row;
@@ -369,13 +388,20 @@
                 text-align: right;
                 width: calc(100% - 3rem);
                 margin: 0 1.5rem 1rem 1.5rem;
+                box-sizing: border-box;
             }
             .feature-icon {
                 font-size: 1.5rem;
                 padding: 10px;
+                flex-shrink: 0; /* Prevent icon from shrinking */
             }
             .feature-text h3 { font-size: 1.1rem; }
             .feature-text p { font-size: 0.95rem; }
+            .mockups-area {
+                justify-content: flex-start !important; /* FIX right alignment bug */
+                width: 100%;
+                padding: 0;
+            }
             .dual-mockups {
                 flex-direction: row;
                 overflow-x: auto;
@@ -386,6 +412,7 @@
                 margin: 0;
                 scrollbar-width: none;
                 -webkit-overflow-scrolling: touch;
+                box-sizing: border-box;
             }
             .dual-mockups::-webkit-scrollbar {
                 display: none;
@@ -394,8 +421,8 @@
                 flex: 0 0 auto;
                 scroll-snap-align: center;
                 transform: none !important;
-                width: 240px;
-                height: 500px;
+                width: 260px;
+                height: 540px;
                 margin: 0;
             }
             .dual-mockups .iphone-frame:nth-child(2) {
@@ -405,7 +432,7 @@
                 font-size: 2rem !important;
                 white-space: normal;
                 text-align: center;
-                margin-top: 1rem;
+                margin-top: 0;
             }
             .slide-title {
                 font-size: 1.6rem;
@@ -414,10 +441,11 @@
             .nav-controls {
                 width: calc(100% - 2rem);
                 left: 1rem;
-                transform: none;
+                transform: none !important;
                 justify-content: space-between;
-                padding: 0.5rem 1rem;
+                padding: 0.8rem 1rem;
                 bottom: 15px;
+                background: rgba(255, 255, 255, 0.95);
             }
         }
 
