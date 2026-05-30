@@ -92,9 +92,20 @@
             border-color: #10b981;
             box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
         }
-        .card-icon {
-            font-size: 4rem;
+        .card-icon-img {
+            width: 88px;
+            height: 88px;
+            object-fit: contain;
             margin-bottom: 1.5rem;
+            border-radius: 22px;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.12);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card:hover .card-icon-img {
+            transform: scale(1.08) rotate(3deg);
+            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.25);
+            border-color: #10b981;
         }
         .card-title {
             font-size: 1.6rem;
@@ -125,13 +136,13 @@
         
         <div class="cards">
             <a href="Beneficiary_App/beneficiary_presentation.html" class="card">
-                <div class="card-icon">👨‍👩‍👧‍👦</div>
+                <img src="Beneficiary_App/app_icon.png" alt="أيقونة تطبيق سند" class="card-icon-img">
                 <div class="card-title">تطبيق سَنَد</div>
                 <div class="card-desc">بوابة الخدمات، البطاقة الرقمية، وتتبع الطلبات الخاصة بالأسر المستفيدة.</div>
             </a>
             
             <a href="Researcher_App/researcher_presentation.html" class="card">
-                <div class="card-icon">📱</div>
+                <img src="Researcher_App/app_icon.png" alt="أيقونة تطبيق أثر" class="card-icon-img">
                 <div class="card-title">تطبيق أَثَر</div>
                 <div class="card-desc">الإدارة الميدانية، الفلاتر الذكية، وصحة البيانات للباحثين والمدققين.</div>
             </a>
