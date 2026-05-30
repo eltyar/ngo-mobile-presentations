@@ -615,6 +615,79 @@
             transition-delay: 0.8s;
         }
 
+        /* App branding styles */
+        .app-branding-badge {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .app-branding-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--primary-glow);
+            border-color: var(--primary);
+        }
+        .app-branding-badge img {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+        .app-branding-badge span {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        
+        .intro-app-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 30px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 15px 35px var(--primary-glow);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: pulse-glow 3s infinite alternate;
+        }
+        .intro-app-icon:hover {
+            transform: scale(1.08);
+            box-shadow: 0 20px 45px rgba(16, 185, 129, 0.45);
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 10px 25px var(--primary-glow); }
+            100% { box-shadow: 0 20px 45px rgba(16, 185, 129, 0.4); }
+        }
+        
+        .outro-app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 25px var(--primary-glow);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            transition: all 0.4s ease;
+        }
+        .outro-app-icon:hover {
+            transform: scale(1.08);
+        }
+
+        /* Hide branding badge on mobile to prevent clutter */
+        @media (max-width: 992px) {
+            .app-branding-badge {
+                display: none;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -624,6 +697,12 @@
         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         <span>الرئيسية</span>
     </a>
+
+    <!-- App Branding Badge -->
+    <div class="app-branding-badge">
+        <img src="app_icon.png" alt="أيقونة تطبيق سند">
+        <span>تطبيق سَنَد</span>
+    </div>
 
 
     <!-- Advanced Effects -->
@@ -640,6 +719,7 @@
         <!-- Slide 0: Intro -->
         <div class="slide active" data-anim="3d-flip">
             <div class="slide-content-wrapper layout-center">
+                <img src="app_icon.png" alt="أيقونة تطبيق سند" class="intro-app-icon">
                 <h1 class="grand-title">المنظومة الرقمية الشاملة للمستفيدين</h1>
                 <p class="slide-desc" style="font-size: 1.5rem; max-width: 800px; margin: 0 auto;">
                     منصة تقنية متكاملة تهدف إلى رقمنة دورة العمل الخيري، وتوفير بيئة موثوقة تتيح للمستفيد إدارة طلباته واستلام المساعدات بآليات سريعة ومحكمة تعزز من كفاءة العمليات المؤسسية.
@@ -894,7 +974,8 @@
         <!-- Slide 9: Grand Outro with Copyright -->
         <div class="slide" data-anim="3d-flip">
             <div class="slide-content-wrapper layout-center">
-                <h1 class="grand-title" style="font-size: 3rem; margin-top: -2rem;">نهاية العرض التقديمي</h1>
+                <img src="app_icon.png" alt="أيقونة تطبيق سند" class="outro-app-icon">
+                <h1 class="grand-title" style="font-size: 3rem; margin-top: -1rem;">نهاية العرض التقديمي</h1>
                 <p class="slide-desc" style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 1.5rem;">
                     شكراً لاطلاعكم على هذا النموذج التفاعلي. نحن نسعى دائماً لتقديم حلول تقنية عملية وواضحة ترتقي بمستوى العمل وتسهل تقديم الخدمات للمستفيدين.
                 </p>

@@ -85,12 +85,17 @@
             color: #0f172a;
             border: 1px solid rgba(255,255,255,0.8);
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        .card:hover {
-            transform: translateY(-10px);
+        .card-sanad:hover {
+            transform: translateY(-8px);
             border-color: #10b981;
             box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
+        }
+        .card-ather:hover {
+            transform: translateY(-8px);
+            border-color: #0D7377;
+            box-shadow: 0 15px 35px rgba(13, 115, 119, 0.15);
         }
         .card-icon-img {
             width: 88px;
@@ -98,14 +103,19 @@
             object-fit: contain;
             margin-bottom: 1.5rem;
             border-radius: 22px;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.12);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
             border: 2px solid rgba(255, 255, 255, 0.9);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        .card:hover .card-icon-img {
-            transform: scale(1.08) rotate(3deg);
-            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.25);
+        .card-sanad:hover .card-icon-img {
+            transform: scale(1.06);
+            box-shadow: 0 12px 28px rgba(16, 185, 129, 0.35);
             border-color: #10b981;
+        }
+        .card-ather:hover .card-icon-img {
+            transform: scale(1.06);
+            box-shadow: 0 12px 28px rgba(13, 115, 119, 0.35);
+            border-color: #0D7377;
         }
         .card-title {
             font-size: 1.6rem;
@@ -135,13 +145,13 @@
         <p>مرحباً بك. هذه البوابة مخصصة لاستعراض النماذج التفاعلية (Presentations) التي توضح واجهات ومميزات تطبيقات الجوال. يرجى اختيار التطبيق الذي تود تصفحه.</p>
         
         <div class="cards">
-            <a href="Beneficiary_App/beneficiary_presentation.html" class="card">
+            <a href="Beneficiary_App/beneficiary_presentation.html" class="card card-sanad">
                 <img src="Beneficiary_App/app_icon.png" alt="أيقونة تطبيق سند" class="card-icon-img">
                 <div class="card-title">تطبيق سَنَد</div>
                 <div class="card-desc">بوابة الخدمات، البطاقة الرقمية، وتتبع الطلبات الخاصة بالأسر المستفيدة.</div>
             </a>
             
-            <a href="Researcher_App/researcher_presentation.html" class="card">
+            <a href="Researcher_App/researcher_presentation.html" class="card card-ather">
                 <img src="Researcher_App/app_icon.png" alt="أيقونة تطبيق أثر" class="card-icon-img">
                 <div class="card-title">تطبيق أَثَر</div>
                 <div class="card-desc">الإدارة الميدانية، الفلاتر الذكية، وصحة البيانات للباحثين والمدققين.</div>
